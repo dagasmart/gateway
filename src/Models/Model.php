@@ -1,32 +1,26 @@
 <?php
+
 namespace DagaSmart\Gateway\Models;
 
 use DagaSmart\BizAdmin\Models\BaseModel;
-use DagaSmart\BizAdmin\Scopes\ActiveScope;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  *基座模型
  */
 class Model extends BaseModel
 {
-
-    const string schema = 'extension'; //连接的数据库名
-
-    protected $connection = self::schema; // 使用school数据库连接
+    const ?string schema = 'master'; // 空值默认数据库
 
     public function __construct()
     {
-        if (!isset($this->connection)) {
-            $this->setConnection($this->connection);
+        if (! empty(self::schema)) {
+            $this->setConnection(self::schema);
         }
         parent::__construct();
     }
 
     protected static function booted(): void
     {
-        static::addGlobalScope(new ActiveScope(self::schema));
         parent::booted();
     }
-
 }
