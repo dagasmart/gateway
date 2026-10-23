@@ -15,7 +15,8 @@ return new class extends Migration
     {
         if (! Schema::hasTable($this->name)) {
             Schema::create($this->name, function (Blueprint $table) {
-                $table->id(); // ✅ 严格对应 INT
+                $table->comment('边缘网关用户表');
+                $table->id();
 
                 $table->string('username', 64)
                     ->unique()
